@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ale Skate Club — Warsaw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0d;
+    --surface: #141414;
+    --card: #1a1a1a;
+    --yellow: #f5e642;
+    --orange: #ff6a1a;
+    --white: #f0ece0;
+    --muted: #888;
+    --border: rgba(245,230,66,0.15);
+    --font-head: 'Bebas Neue', sans-serif;
+    --font-body: 'Space Grotesk', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--yellow);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.08s ease, width 0.2s, height 0.2s, background 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--yellow);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, width 0.2s, height 0.2s, opacity 0.2s;
+    opacity: 0.5;
+  }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.35;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 1.2rem 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(20px);
+    background: rgba(13,13,13,0.7);
+  }
+  .nav-logo {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    letter-spacing: 0.08em;
+    color: var(--yellow);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--orange); }
+  .nav-links {
+    display: flex; gap: 2.2rem; list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--yellow); }
+  .nav-cta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: var(--yellow);
+    color: var(--bg);
+    padding: 0.55rem 1.3rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--orange); color: #fff; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 2.5rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(255,106,26,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 20% 80%, rgba(245,230,66,0.08) 0%, transparent 55%),
+      var(--bg);
+  }
+  .hero-tape {
+    position: absolute; top: 32%; left: -2%;
+    width: 110%;
+    background: var(--yellow);
+    color: var(--bg);
+    font-family: var(--font-head);
+    font-size: 1.05rem;
+    letter-spacing: 0.25em;
+    padding: 0.55rem 0;
+    transform: rotate(-2.5deg);
+    white-space: nowrap;
+    overflow: hidden;
+    z-index: 2;
+    opacity: 0.92;
+  }
+  .tape-inner {
+    display: inline-block;
+    animation: marquee 18s linear infinite;
+    white-space: nowrap;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1.2rem;
+    position: relative; z-index: 3;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: var(--font-head);
+    font-size: clamp(5rem, 15vw, 14rem);
+    line-height: 0.9;
+    color: var(--white);
+    position: relative; z-index: 3;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.35s forwards;
+  }
+  .hero-title .accent { color: var(--yellow); }
+  .hero-title .stroke {
+    -webkit-text-stroke: 2px var(--white);
+    color: transparent;
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin-top: 2rem;
+    line-height: 1.7;
+    position: relative; z-index: 3;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.55s forwards;
+  }
+  .hero-actions {
+    margin-top: 2.5rem;
+    display: flex; gap: 1.2rem; align-items: center;
+    position: relative; z-index: 3;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.72s forwards;
+  }
+  .btn-primary {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--yellow);
+    color: var(--bg);
+    padding: 0.95rem 2.2rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--orange); color: #fff; transform: translateY(-2px); }
+  .btn-ghost {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.95rem 2.2rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--yellow); color: var(--yellow); }
+
+  .hero-scroll-hint {
+    position: absolute; bottom: 2rem; right: 2.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    display: flex; align-items: center; gap: 0.6rem;
+    z-index: 3;
+    opacity: 0;
+    animation: fadeIn 1s 1.5s forwards;
+  }
+  .hero-scroll-hint::after {
+    content: '';
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    to { opacity: 0.5; }
+  }
+
+  /* SECTION COMMONS */
+  section {
+    position: relative; z-index: 1;
+    padding: 6rem 2.5rem;
+  }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 28px; height: 1px;
+    background: var(--orange);
+  }
+  .section-title {
+    font-family: var(--font-head);
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+  .section-title .y { color: var(--yellow); }
+
+  /* ABOUT */
+  .about {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .about-text p {
+    color: #aaa;
+    line-height: 1.85;
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+  }
+  .about-text p strong { color: var(--white); font-weight: 500; }
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5px;
+    background: var(--border);
+  }
+  .stat {
+    background: var(--card);
+    padding: 2.2rem 1.8rem;
+    border: 1px solid transparent;
+    transition: border-color 0.25s;
+  }
+  .stat:hover { border-color: var(--yellow); }
+  .stat-num {
+    font-family: var(--font-head);
+    font-size: 3.8rem;
+    color: var(--yellow);
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .stat-desc {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* SCHEDULE */
+  .schedule-wrap {
+    max-width: 1200px; margin: 0 auto;
+  }
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    margin-top: 3rem;
+  }
+  .day-card {
+    background: var(--card);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.25s;
+  }
+  .day-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--yellow);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .day-card:hover::before { transform: scaleX(1); }
+  .day-card:hover { background: #202020; }
+  .day-num {
+    font-family: var(--font-head);
+    font-size: 5rem;
+    color: rgba(245,230,66,0.07);
+    line-height: 1;
+    position: absolute;
+    top: 0.5rem; right: 1.2rem;
+  }
+  .day-name {
+    font-family: var(--font-head);
+    font-size: 2.5rem;
+    color: var(--yellow);
+    margin-bottom: 0.5rem;
+  }
+  .day-type {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1.5rem;
+  }
+  .day-detail {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .day-detail strong { color: var(--white); }
+
+  /* SPOTS */
+  .spots {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .spots-wrap { max-width: 1200px; margin: 0 auto; }
+  .spots-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    margin-bottom: 3rem;
+  }
+  .spots-intro p { color: #aaa; line-height: 1.85; font-size: 1rem; }
+  .spots-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    background: var(--border);
+  }
+  .spot-item {
+    background: var(--card);
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: background 0.2s;
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  .spot-item:hover { background: #1f1f1f; border-left-color: var(--yellow); }
+  .spot-num {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--orange);
+    letter-spacing: 0.2em;
+  }
+  .spot-name {
+    font-family: var(--font-head);
+    font-size: 1.6rem;
+    color: var(--white);
+  }
+  .spot-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .spot-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: rgba(245,230,66,0.1);
+    color: var(--yellow);
+    padding: 0.25rem 0.7rem;
+    margin-top: 0.3rem;
+    align-self: flex-start;
+  }
+
+  /* JOIN */
+  .join-wrap { max-width: 1200px; margin: 0 auto; }
+  .join-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--border);
+    margin-top: 3rem;
+  }
+  .step {
+    background: var(--card);
+    padding: 2.2rem 1.8rem;
+    position: relative;
+  }
+  .step-arrow {
+    position: absolute;
+    top: 50%; right: -1px;
+    transform: translateY(-50%);
+    width: 0; height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 14px solid var(--bg);
+    z-index: 2;
+  }
+  .step:last-child .step-arrow { display: none; }
+  .step-icon {
+    font-size: 2rem; margin-bottom: 1rem;
+  }
+  .step-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.6rem;
+  }
+  .step-title {
+    font-family: var(--font-head);
+    font-size: 1.5rem;
+    color: var(--yellow);
+    margin-bottom: 0.8rem;
+  }
+  .step-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .join-cta-box {
+    margin-top: 4rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+  .join-cta-box h3 {
+    font-family: var(--font-head);
+    font-size: 2.8rem;
+    line-height: 1.1;
+  }
+  .join-cta-box h3 span { color: var(--yellow); }
+  .join-cta-box p { color: var(--muted); margin-top: 0.8rem; font-size: 0.95rem; line-height: 1.6; }
+  .join-cta-links {
+    display: flex; flex-direction: column; gap: 1rem; min-width: 220px;
+  }
+
+  /* FAQ */
+  .faq { background: var(--surface); border-top: 1px solid var(--border); }
+  .faq-wrap { max-width: 860px; margin: 0 auto; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 500;
+    padding: 1.5rem 0;
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: none;
+    text-align: left;
+    transition: color 0.2s;
+  }
+  .faq-q:hover { color: var(--yellow); }
+  .faq-icon {
+    font-family: var(--font-head);
+    font-size: 1.5rem;
+    color: var(--yellow);
+    min-width: 24px;
+    text-align: center;
+    transition: transform 0.25s;
+  }
+  .faq-a {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease, padding 0.25s;
+  }
+  .faq-a p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    padding-bottom: 1.5rem;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-item.open .faq-a { max-height: 300px; }
+
+  /* INSTAGRAM */
+  .ig-section { background: var(--bg); }
+  .ig-wrap { max-width: 1200px; margin: 0 auto; text-align: center; }
+  .ig-handle {
+    font-family: var(--font-head);
+    font-size: clamp(3rem, 9vw, 8rem);
+    color: transparent;
+    -webkit-text-stroke: 2px var(--yellow);
+    letter-spacing: 0.05em;
+    display: block;
+    margin: 1.5rem 0;
+    transition: color 0.3s;
+  }
+  .ig-handle:hover {
+    color: var(--yellow);
+    -webkit-text-stroke-color: var(--yellow);
+  }
+  .ig-sub {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .ig-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+    margin-top: 3rem;
+  }
+  .ig-placeholder {
+    aspect-ratio: 1;
+    background: var(--card);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: rgba(136,136,136,0.4);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    transition: border-color 0.25s, background 0.2s;
+  }
+  .ig-placeholder:hover { border-color: var(--yellow); background: #1e1e1e; }
+  .ig-placeholder .ig-emoji { font-size: 1.8rem; opacity: 0.35; }
+
+  /* FOOTER */
+  footer {
+    background: #080808;
+    border-top: 1px solid var(--border);
+    padding: 4rem 2.5rem 2rem;
+  }
+  .footer-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .footer-brand .logo {
+    font-family: var(--font-head);
+    font-size: 2.8rem;
+    color: var(--yellow);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .footer-brand p {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    max-width: 260px;
+    line-height: 1.7;
+  }
+  .footer-col h4 {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-col ul li {
+    font-size: 0.88rem;
+    color: var(--muted);
+    transition: color 0.2s;
+    cursor: default;
+  }
+  .footer-col ul li:hover { color: var(--white); }
+  .footer-col a { text-decoration: none; color: inherit; }
+  .footer-bottom {
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-bottom p {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: rgba(136,136,136,0.45);
+    letter-spacing: 0.12em;
+  }
+  .footer-ig-btn {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    border: 1px solid rgba(245,230,66,0.3);
+    padding: 0.5rem 1.2rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .footer-ig-btn:hover { background: var(--yellow); color: var(--bg); }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 1.5rem 4rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid, .spots-intro, .join-cta-box {
+      grid-template-columns: 1fr; flex-direction: column;
+    }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+    .schedule-grid, .join-steps { grid-template-columns: 1fr; }
+    .spots-list { grid-template-columns: 1fr; }
+    .ig-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-top { flex-direction: column; }
+    .step-arrow { display: none; }
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">ALE<span>SKATE</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#spots">Spots</a></li>
+    <li><a href="#join">Join</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="https://www.instagram.com/aleskate.club/" target="_blank" class="nav-cta">Follow @aleskate.club</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-tape">
+    <div class="tape-inner">
+      WARSAW SKATEBOARDING &nbsp;★&nbsp; NO EXPERIENCE NEEDED &nbsp;★&nbsp; TUE · THU · SAT &nbsp;★&nbsp; MADE WITH LOVE &nbsp;★&nbsp; WARSAW SKATEBOARDING &nbsp;★&nbsp; NO EXPERIENCE NEEDED &nbsp;★&nbsp; TUE · THU · SAT &nbsp;★&nbsp; MADE WITH LOVE &nbsp;★&nbsp;
+    </div>
+  </div>
+
+  <p class="hero-eyebrow">Non-professional skate club · Warsaw, Poland</p>
+  <h1 class="hero-title">
+    ALE<br>
+    <span class="accent">SKATE</span><br>
+    <span class="stroke">CLUB</span>
+  </h1>
+  <p class="hero-sub">A community built for everyone — from first push to seasoned rider. No board, no experience, no problem. Just show up and we'll figure it out together.</p>
+  <div class="hero-actions">
+    <a href="#join" class="btn-primary">Join the Club</a>
+    <a href="#schedule" class="btn-ghost">See Schedule</a>
+  </div>
+
+  <span class="hero-scroll-hint">Scroll down</span>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p class="section-label">Who we are</p>
+      <h2 class="section-title">Made with<br><span class="y">love</span></h2>
+      <p>Ale Skate Club is a <strong>non-professional, community-driven skateboard crew</strong> based in Warsaw. We started this club because we believe skating is for everyone — regardless of age, skill, or whether you even own a board.</p>
+      <p>Our name says it all: <strong>"Ale"</strong> in Polish means "But" — as in, <em>"But wait — you CAN skate."</em> We break down every barrier to entry and replace it with stoke, community, and solid sessions.</p>
+      <p>We gather three times a week at spots across Warsaw. Sessions are casual, supportive, and always a good time. Whether you want to land your first ollie or just cruise around with friendly people, you belong here.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat">
+        <span class="stat-num">3×</span>
+        <span class="stat-desc">Weekly sessions</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">0</span>
+        <span class="stat-desc">Board required</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">WAW</span>
+        <span class="stat-desc">Warsaw, Poland</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">∞</span>
+        <span class="stat-desc">Level of welcome</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="schedule">
+  <div class="schedule-wrap">
+    <div class="reveal">
+      <p class="section-label">When we skate</p>
+      <h2 class="section-title">Regular<br><span class="y">Meetings</span></h2>
+    </div>
+    <div class="schedule-grid reveal">
+      <div class="day-card">
+        <div class="day-num">TUE</div>
+        <div class="day-name">Tuesday</div>
+        <div class="day-type">Skateboard Tuesday — flagship session</div>
+        <div class="day-detail">
+          Our main weekly event. This is the core of Ale Skate Club — all levels welcome, from complete beginners to more experienced riders. We pick a spot, we skate, we hang.<br><br>
+          <strong>Bring:</strong> yourself. Everything else we can sort out.
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-num">THU</div>
+        <div class="day-name">Thursday</div>
+        <div class="day-type">Mid-week skate session</div>
+        <div class="day-detail">
+          The mid-week session to keep the momentum going. Great for working on what you tried on Tuesday, meeting new people, and exploring different spots around the city.<br><br>
+          <strong>Vibe:</strong> chill and exploratory.
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-num">SAT</div>
+        <div class="day-name">Saturday</div>
+        <div class="day-type">Weekend session</div>
+        <div class="day-detail">
+          The weekend session draws the biggest crowd. More time, more energy, more spots. Perfect for those who can't make it during the week. Sometimes we organize longer skate trips across Warsaw.<br><br>
+          <strong>Duration:</strong> as long as we want.
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top: 2rem; padding: 1.5rem 1.8rem; background: var(--card); border-left: 3px solid var(--orange); max-width: 700px;">
+      <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--orange); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem;">📍 How to find us</p>
+      <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.7;">Meeting locations are announced on our <strong style="color:var(--white)">Instagram @aleskate.club</strong> before each session. Follow us to stay updated — we sometimes go to different spots depending on weather, season, and what feels good that week.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SPOTS -->
+<section class="spots" id="spots">
+  <div class="spots-wrap">
+    <div class="spots-intro reveal">
+      <div>
+        <p class="section-label">Where we skate</p>
+        <h2 class="section-title">Warsaw<br><span class="y">Spots</span></h2>
+      </div>
+      <p>Warsaw has a surprisingly rich skate scene. From iconic free outdoor skateparks to underground DIY gems, the city has something for every style. Here are some of the spots on our regular rotation.</p>
+    </div>
+    <div class="spots-list reveal">
+      <div class="spot-item">
+        <span class="spot-num">01 / indoor</span>
+        <span class="spot-name">AvePark</span>
+        <p class="spot-desc">Warsaw's largest indoor skatepark — 3,000 sqm of street, park, and bowl sections. Heated in winter. Perfect for year-round sessions when the weather turns. Equipment rental on-site for beginners.</p>
+        <span class="spot-tag">indoor · all levels · gear rental</span>
+      </div>
+      <div class="spot-item">
+        <span class="spot-num">02 / indoor</span>
+        <span class="spot-name">Woodpark</span>
+        <p class="spot-desc">Created by skaters, for skaters. Woodpark features a wooden volatile section plus a full concrete street section with the longest handrail in Poland, funboxes, and more. Beginner-friendly schools operate here too.</p>
+        <span class="spot-tag">indoor · street · bowl</span>
+      </div>
+      <div class="spot-item">
+        <span class="spot-num">03 / street</span>
+        <span class="spot-name">Świętokrzyski Bridge Skatepark</span>
+        <p class="spot-desc">A compact, cleverly designed skatepark sheltered under the bridge — rain or shine, day or night. Funboxes, grindboxes, and fun obstacles. Lit after dark, so evening sessions are very much on the table.</p>
+        <span class="spot-tag">outdoor · sheltered · night sessions</span>
+      </div>
+      <div class="spot-item">
+        <span class="spot-num">04 / plaza</span>
+        <span class="spot-name">Pole Mokotowskie</span>
+        <p class="spot-desc">Central Warsaw park with a large concrete plaza featuring stairs, rails, and ledges. A classic gathering spot for the Warsaw skate community — people-watching is half the fun here.</p>
+        <span class="spot-tag">free · central · outdoor</span>
+      </div>
+      <div class="spot-item">
+        <span class="spot-num">05 / diy</span>
+        <span class="spot-name">Shaber Bowl</span>
+        <p class="spot-desc">Warsaw's legendary DIY spot — born from a group of skate enthusiasts who literally moved 100 tons of rubble with their hands. 2,000 sqm of pure soul. A stolen bowl, a place with history. One of a kind in Poland.</p>
+        <span class="spot-tag">diy · iconic · bowl</span>
+      </div>
+      <div class="spot-item">
+        <span class="spot-num">06 / plaza</span>
+        <span class="spot-name">Służewiec Skatepark</span>
+        <p class="spot-desc">One of the most popular outdoor skateparks in Warsaw — large concrete bowl with extensive street obstacles including stairs and rails. Free, open year-round, and always busy with the local scene.</p>
+        <span class="spot-tag">free · concrete · all year</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section id="join">
+  <div class="join-wrap">
+    <div class="reveal">
+      <p class="section-label">Get involved</p>
+      <h2 class="section-title">How to<br><span class="y">Join</span></h2>
+    </div>
+    <div class="join-steps reveal">
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-icon">📱</div>
+        <div class="step-label">Step 01</div>
+        <div class="step-title">Follow Us</div>
+        <p class="step-desc">Find us on Instagram at <strong>@aleskate.club</strong>. This is where all session announcements, spot updates, and spontaneous meetups happen.</p>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-icon">📍</div>
+        <div class="step-label">Step 02</div>
+        <div class="step-title">Check the Spot</div>
+        <p class="step-desc">Before each session (Tue, Thu, Sat) we post the meeting location on Instagram. Check the latest post or story to know exactly where we're going.</p>
+      </div>
+      <div class="step">
+        <div class="step-arrow"></div>
+        <div class="step-icon">🛹</div>
+        <div class="step-label">Step 03</div>
+        <div class="step-title">Show Up</div>
+        <p class="step-desc">Just arrive! No membership fee, no registration. If you don't have a board, don't worry — we'll sort it out. First time? Just say hi and we'll take it from there.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">🤙</div>
+        <div class="step-label">Step 04</div>
+        <div class="step-title">Be Part of It</div>
+        <p class="step-desc">You're in the crew now. Come back, bring friends, contribute your energy to the community. We grow together and skate together.</p>
+      </div>
+    </div>
+
+    <div class="join-cta-box reveal">
+      <div>
+        <h3>Ready to <span>push off?</span></h3>
+        <p>No experience needed. No board needed. Just a willingness to try. We promise a safe, welcoming, and fun environment for everyone — beginners especially.</p>
+      </div>
+      <div class="join-cta-links">
+        <a href="https://www.instagram.com/aleskate.club/" target="_blank" class="btn-primary">→ Follow on Instagram</a>
+        <a href="https://locals.org/ale-skate" target="_blank" class="btn-ghost">→ Join the Community</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-wrap">
+    <div class="reveal">
+      <p class="section-label">Questions</p>
+      <h2 class="section-title">FAQ</h2>
+    </div>
+    <div style="margin-top: 2.5rem;">
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          Do I need my own skateboard to join?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Absolutely not. If you don't have a board, no worries — we'll figure it out together. Club members often share boards, especially with beginners. For indoor sessions at spots like AvePark, there's also gear rental available on-site.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          I've never skated before. Is this club for me?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>100% yes. Ale Skate Club is explicitly non-professional and welcomes complete beginners with open arms. Our community is built on the idea that everyone starts somewhere. You'll find patient, encouraging people who remember exactly what it was like to stand on a board for the first time.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          Is there a membership fee?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>No. Ale Skate Club is a community club — free to join and free to participate in outdoor sessions. For indoor park sessions (AvePark, Woodpark), you'd pay that park's entry fee directly, but there's no club fee on top of that.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          Where exactly are sessions held?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Session locations vary — that's part of the fun! We explore different spots across Warsaw, from the Świętokrzyski bridge skatepark and Pole Mokotowskie to indoor parks in winter. The exact spot for each session is announced on our Instagram (@aleskate.club) beforehand, so follow us to stay updated.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          What should I wear / bring?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Comfortable clothes you can move in. Closed-toe shoes with flat soles are best (think Vans, Converse, or any skate shoe). Knee pads and wrist guards are recommended for beginners — safety first. Bring water and good energy. That's it.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          Are sessions still on in winter?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Yes! Warsaw winters don't stop us. We move sessions indoors to spots like AvePark (heated, 3000 sqm, Warsaw's largest indoor skatepark) and Woodpark during colder months. The Świętokrzyski Bridge spot is also sheltered and usable year-round.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          Can kids join?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Skateboarding has no age limit. Younger skaters are welcome — just make sure parents are aware of the meetup location and timing. Indoor parks like AvePark even have dedicated kids sessions and beginner-friendly areas with foam pits.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM CTA -->
+<section class="ig-section">
+  <div class="ig-wrap reveal">
+    <p class="ig-sub">Find us on Instagram</p>
+    <a href="https://www.instagram.com/aleskate.club/" target="_blank" class="ig-handle">@aleskate.club</a>
+    <p class="ig-sub">Session announcements · Community photos · Warsaw skate life</p>
+    <div class="ig-grid">
+      <div class="ig-placeholder"><span class="ig-emoji">🛹</span>session</div>
+      <div class="ig-placeholder"><span class="ig-emoji">📸</span>photos</div>
+      <div class="ig-placeholder"><span class="ig-emoji">🔥</span>tricks</div>
+      <div class="ig-placeholder"><span class="ig-emoji">📍</span>spots</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo">ALESKATE</span>
+      <p>Non-professional skate club in Warsaw.<br>Made with love.<br>Est. — always.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Sessions</h4>
+      <ul>
+        <li>Tuesday — Skateboard Tuesday</li>
+        <li>Thursday — Mid-week session</li>
+        <li>Saturday — Weekend session</li>
+        <li>Location via Instagram stories</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Spots</h4>
+      <ul>
+        <li>AvePark (indoor)</li>
+        <li>Woodpark (indoor)</li>
+        <li>Świętokrzyski Bridge</li>
+        <li>Pole Mokotowskie</li>
+        <li>Shaber Bowl</li>
+        <li>Służewiec Skatepark</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="https://www.instagram.com/aleskate.club/" target="_blank">Instagram @aleskate.club</a></li>
+        <li><a href="https://locals.org/ale-skate" target="_blank">Locals.org Community</a></li>
+        <li>No fee to join</li>
+        <li>All levels welcome</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© Ale Skate Club · Warsaw, Poland · aleskate.club</p>
+    <a href="https://www.instagram.com/aleskate.club/" target="_blank" class="footer-ig-btn">Instagram →</a>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function animCursor() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+  })();
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
