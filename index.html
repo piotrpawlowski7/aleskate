@@ -15,7 +15,6 @@
     --surface: #f4f4f2;
     --card: #ffffff;
     --accent: #F7B021;
-    --accent-hover: #c99212;
     --yellow: #F7B021;
     --orange: #F7B021;
     --text: #141414;
@@ -80,6 +79,8 @@
     background: rgba(255,255,255,0.88);
   }
   .nav-logo {
+    display: inline-flex;
+    align-items: center;
     font-family: var(--font-head);
     font-size: 1.8rem;
     letter-spacing: 0.06em;
@@ -87,7 +88,24 @@
     text-decoration: none;
     white-space: nowrap;
   }
-  .nav-logo span { color: var(--accent); }
+  .nav-logo-img {
+    height: 1.9rem;
+    width: auto;
+    max-width: 100%;
+    display: block;
+  }
+  .nav-logo-img--hidden {
+    display: none !important;
+  }
+  .nav-logo-fallback {
+    display: none;
+  }
+  .nav-logo--fallback .nav-logo-fallback {
+    display: inline;
+  }
+  .nav-logo-accent {
+    color: var(--accent);
+  }
   .nav-links {
     display: flex; gap: 1.8rem; list-style: none;
   }
@@ -111,10 +129,10 @@
     padding: 0.5rem 1.2rem;
     text-decoration: none;
     font-weight: 500;
-    transition: background 0.2s;
+    transition: background 0.2s, color 0.2s;
     white-space: nowrap;
   }
-  .nav-cta:hover { background: var(--accent-hover); color: #fff; }
+  .nav-cta:hover { background: var(--text); color: #fff; }
 
   /* Hamburger */
   .nav-hamburger {
@@ -196,14 +214,17 @@
       var(--bg);
   }
   .hero-tape {
+    grid-column: 1 / -1;
+    grid-row: 3;
     position: relative;
     /* full viewport width: offset by hero horizontal padding (50% was wrong — it used narrow column width) */
     width: 100vw;
     max-width: none;
     margin-left: calc(-1 * var(--hero-pad-x));
     box-sizing: border-box;
-    margin-top: 2.25rem;
+    margin-top: 2.5rem;
     margin-bottom: 0;
+    align-self: stretch;
     background: var(--accent);
     color: var(--text);
     font-family: var(--font-head);
@@ -212,7 +233,7 @@
     padding: 0.55rem 0;
     white-space: nowrap;
     overflow: hidden;
-    z-index: 2;
+    z-index: 1;
     opacity: 0.95;
   }
   .tape-inner {
@@ -228,7 +249,7 @@
     min-width: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto;
     column-gap: 4rem;
     row-gap: 0;
     align-items: start;
@@ -260,6 +281,30 @@
   .hero-title .stroke {
     -webkit-text-stroke: 2px var(--text);
     color: transparent;
+  }
+  .hero-title--logo {
+    white-space: normal;
+    text-align: center;
+  }
+  .hero-title--logo .hero-title-logo {
+    display: block;
+    width: min(100%, 94vw);
+    max-width: min(960px, 100%);
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    filter: drop-shadow(0 14px 48px rgba(247, 176, 33, 0.22));
+  }
+  .hero-title-logo--hidden {
+    display: none !important;
+  }
+  .hero-title-fallback {
+    display: none;
+  }
+  .hero-title--logo.hero-title--fallback .hero-title-fallback {
+    display: block;
+    font-size: clamp(5rem, 13vw, 13rem);
+    line-height: 0.88;
   }
   .hero-established {
     font-family: var(--font-mono);
@@ -314,10 +359,10 @@
     padding: 0.9rem 2rem;
     text-decoration: none;
     font-weight: 500;
-    transition: all 0.2s;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
     display: inline-block;
   }
-  .btn-primary:hover { background: var(--accent-hover); color: #fff; transform: translateY(-2px); }
+  .btn-primary:hover { background: var(--text); color: #fff; transform: translateY(-2px); }
   .btn-ghost {
     font-family: var(--font-mono);
     font-size: 0.78rem;
@@ -336,15 +381,15 @@
     font-size: 0.78rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    background: #25D366;
-    color: #fff;
+    background: var(--accent);
+    color: var(--text);
     padding: 0.9rem 2rem;
     text-decoration: none;
     font-weight: 500;
-    transition: all 0.2s;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
     display: inline-block;
   }
-  .btn-whatsapp:hover { background: #1da851; transform: translateY(-2px); }
+  .btn-whatsapp:hover { background: var(--text); color: #fff; transform: translateY(-2px); }
 
   /* SECTION COMMONS */
   section { position: relative; z-index: 1; padding: 6rem 2.5rem; }
@@ -776,13 +821,27 @@
     gap: 3rem;
     flex-wrap: wrap;
   }
-  .footer-brand .logo {
+  .footer-brand-mark {
+    margin-bottom: 0.5rem;
+  }
+  .footer-brand-logo-img {
+    display: block;
+    height: 2.5rem;
+    width: auto;
+    max-width: 100%;
+  }
+  .footer-brand-logo-img--hidden {
+    display: none !important;
+  }
+  .footer-brand-fallback {
     font-family: var(--font-head);
     font-size: 2.5rem;
     color: var(--text);
-    display: block;
+    display: none;
     letter-spacing: 0.04em;
-    margin-bottom: 0.5rem;
+  }
+  .footer-brand--logo-fallback .footer-brand-fallback {
+    display: block;
   }
   .footer-brand p {
     font-family: var(--font-mono);
@@ -862,7 +921,7 @@
       grid-column: 1;
       grid-row: 1;
       grid-template-columns: 1fr;
-      grid-template-rows: auto auto auto;
+      grid-template-rows: auto auto auto auto;
       column-gap: 0;
     }
     .hero-eyebrow {
@@ -887,10 +946,28 @@
       margin-top: 0;
       padding-top: 0;
     }
+    .hero-tape {
+      grid-column: 1;
+      grid-row: 4;
+      margin-top: 2rem;
+    }
     .hero-title {
       font-size: clamp(2rem, 13vw, 5.25rem);
       line-height: 1.05;
       white-space: nowrap;
+    }
+    .hero-title--logo {
+      white-space: normal;
+    }
+    .hero-title--logo .hero-title-logo {
+      width: min(100%, 96vw);
+      max-width: 100%;
+      max-height: min(36vh, 280px);
+      height: auto;
+    }
+    .hero-title--logo.hero-title--fallback .hero-title-fallback {
+      font-size: clamp(2rem, 13vw, 5.25rem);
+      line-height: 1.05;
     }
     .hero-title br { display: none; }
     .hero-illustration img {
@@ -924,7 +1001,10 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">ALE<span>SKATE</span> CLUB</a>
+  <a href="#" class="nav-logo">
+    <img class="nav-logo-img" src="images/logo-sm.png" alt="Ale Skate Club" width="400" height="73" decoding="async" onerror="this.onerror=null;this.classList.add('nav-logo-img--hidden');this.setAttribute('aria-hidden','true');this.removeAttribute('alt');var p=this.closest('.nav-logo');p.classList.add('nav-logo--fallback');p.querySelector('.nav-logo-fallback').removeAttribute('aria-hidden');">
+    <span class="nav-logo-fallback" aria-hidden="true">ALE<span class="nav-logo-accent">SKATE</span> CLUB</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">About Us</a></li>
     <li><a href="#meetings">Regular Meetings</a></li>
@@ -961,10 +1041,21 @@
       <img src="images/ALESCLUB_ILU_02-01.png" alt="ALE Skate Club community illustration" />
     </div>
     <div class="hero-copy">
-      <h1 class="hero-title">
-        ALE <br>
-        <span class="accent">SKATE</span> <br>
-        <span class="stroke">CLUB</span>
+      <h1 class="hero-title hero-title--logo">
+        <img
+          class="hero-title-logo"
+          src="images/logo.png"
+          alt="ALE SKATE logo"
+          width="800"
+          height="146"
+          decoding="async"
+          onerror="this.onerror=null;this.classList.add('hero-title-logo--hidden');this.setAttribute('aria-hidden','true');this.removeAttribute('alt');var h=this.closest('.hero-title');h.classList.add('hero-title--fallback');h.querySelector('.hero-title-fallback').removeAttribute('aria-hidden');"
+        />
+        <span class="hero-title-fallback" aria-hidden="true">
+          ALE <br>
+          <span class="accent">SKATE</span> <br>
+          <span class="stroke">CLUB</span>
+        </span>
       </h1>
       <p class="hero-established">Established 2022</p>
       <p class="hero-sub">Warsaw-based skateboarding community since 2022. People and boards first — cruising the city together, every week, all season long.</p>
@@ -972,10 +1063,10 @@
         <a href="https://chat.whatsapp.com/LwtLbxt1eqWIBU5DchTXIn?mode=gi_t" target="_blank" class="btn-whatsapp">Join WhatsApp</a>
         <a href="#meetings" class="btn-ghost">See Schedule</a>
       </div>
-      <div class="hero-tape" aria-hidden="true">
-        <div class="tape-inner">
-          WARSAW SKATEBOARDING &nbsp;★&nbsp; ESTABLISHED 2022 &nbsp;★&nbsp; COMMUNITY &nbsp;★&nbsp; CRUISING &nbsp;★&nbsp; SURFSKATE &nbsp;★&nbsp; LONGBOARD &nbsp;★&nbsp; DANCING &nbsp;★&nbsp; RIVER RIDES &nbsp;★&nbsp; WARSAW SKATEBOARDING &nbsp;★&nbsp; ESTABLISHED 2022 &nbsp;★&nbsp; COMMUNITY &nbsp;★&nbsp; CRUISING &nbsp;★&nbsp; SURFSKATE &nbsp;★&nbsp; LONGBOARD &nbsp;★&nbsp; DANCING &nbsp;★&nbsp; RIVER RIDES &nbsp;★&nbsp;
-        </div>
+    </div>
+    <div class="hero-tape" aria-hidden="true">
+      <div class="tape-inner">
+        WARSAW SKATEBOARDING &nbsp;★&nbsp; ESTABLISHED 2022 &nbsp;★&nbsp; COMMUNITY &nbsp;★&nbsp; CRUISING &nbsp;★&nbsp; SURFSKATE &nbsp;★&nbsp; LONGBOARD &nbsp;★&nbsp; DANCING &nbsp;★&nbsp; RIVER RIDES &nbsp;★&nbsp; WARSAW SKATEBOARDING &nbsp;★&nbsp; ESTABLISHED 2022 &nbsp;★&nbsp; COMMUNITY &nbsp;★&nbsp; CRUISING &nbsp;★&nbsp; SURFSKATE &nbsp;★&nbsp; LONGBOARD &nbsp;★&nbsp; DANCING &nbsp;★&nbsp; RIVER RIDES &nbsp;★&nbsp;
       </div>
     </div>
   </div>
@@ -1281,7 +1372,10 @@
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <span class="logo">ALE SKATE CLUB</span>
+      <div class="footer-brand-mark">
+        <img class="footer-brand-logo-img" src="images/logo-sm.png" alt="Ale Skate Club" width="400" height="73" decoding="async" onerror="this.onerror=null;this.classList.add('footer-brand-logo-img--hidden');this.setAttribute('aria-hidden','true');this.removeAttribute('alt');var b=this.closest('.footer-brand');b.classList.add('footer-brand--logo-fallback');b.querySelector('.footer-brand-fallback').removeAttribute('aria-hidden');">
+        <span class="footer-brand-fallback" aria-hidden="true">ALE<span class="nav-logo-accent">SKATE</span> CLUB</span>
+      </div>
       <p>Non-professional skate club in Warsaw.<br>Established 2022.</p>
     </div>
     <div class="footer-col">
