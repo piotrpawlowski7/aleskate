@@ -902,6 +902,20 @@
     }
   }
 
+  /* Desktop: hero logo / title aligned to column left (not centered in half-width column) */
+  @media (min-width: 901px) {
+    .hero-title--logo {
+      text-align: left;
+    }
+    .hero-title--logo .hero-title-logo {
+      margin-left: 0;
+      margin-right: auto;
+    }
+    .hero-title--logo.hero-title--fallback .hero-title-fallback {
+      text-align: left;
+    }
+  }
+
   /* MOBILE */
   @media (max-width: 900px) {
     nav { padding: 0.9rem 1.5rem; }
