@@ -191,7 +191,6 @@
   /* HERO */
   .hero {
     --hero-pad-x: 2.5rem;
-    min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr;
     align-items: start;
@@ -217,8 +216,9 @@
     grid-column: 1 / -1;
     grid-row: 3;
     position: relative;
-    /* full viewport width: offset by hero horizontal padding (50% was wrong — it used narrow column width) */
-    width: 100vw;
+    /* Full-bleed inside padded .hero. Avoid width:100vw — it widens min-content and blows out the grid past the viewport (clips .hero-copy on mobile). */
+    width: calc(100% + 2 * var(--hero-pad-x));
+    min-width: 0;
     max-width: none;
     margin-left: calc(-1 * var(--hero-pad-x));
     box-sizing: border-box;
@@ -288,7 +288,7 @@
   }
   .hero-title--logo .hero-title-logo {
     display: block;
-    width: min(100%, 94vw);
+    width: 100%;
     max-width: min(960px, 100%);
     height: auto;
     margin-left: auto;
@@ -339,10 +339,10 @@
   }
   .hero-illustration img {
     display: block;
+    width: 100%;
     max-width: 100%;
-    width: auto;
     height: auto;
-    max-height: min(82vh, 960px);
+    max-height: clamp(240px, 78svh, 960px);
     object-fit: contain;
     object-position: center center;
     filter: drop-shadow(0 20px 60px rgba(247,176,33,0.2));
@@ -895,6 +895,13 @@
   }
   .reveal.visible { opacity: 1; transform: none; }
 
+  /* Narrow desktop / tablet landscape: ease two-column hero */
+  @media (max-width: 1200px) and (min-width: 901px) {
+    .hero-content {
+      column-gap: clamp(1.5rem, 4vw, 4rem);
+    }
+  }
+
   /* MOBILE */
   @media (max-width: 900px) {
     nav { padding: 0.9rem 1.5rem; }
@@ -913,7 +920,6 @@
     .hero {
       --hero-pad-x: 1.5rem;
       grid-template-columns: 1fr;
-      min-height: auto;
       align-items: stretch;
       padding: calc(var(--nav-bar-height) + 0.85rem) var(--hero-pad-x) 4rem;
     }
@@ -960,7 +966,7 @@
       white-space: normal;
     }
     .hero-title--logo .hero-title-logo {
-      width: min(100%, 96vw);
+      width: 100%;
       max-width: 100%;
       max-height: min(36vh, 280px);
       height: auto;
