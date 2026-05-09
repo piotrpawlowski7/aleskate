@@ -36,7 +36,6 @@
     color: var(--text);
     font-family: var(--font-body);
     overflow-x: hidden;
-    cursor: none;
   }
 
   /* Custom cursor */
@@ -48,6 +47,7 @@
     pointer-events: none; z-index: 9999;
     transform: translate(-50%, -50%);
     transition: transform 0.08s ease, width 0.2s, height 0.2s;
+    display: none;
   }
   .cursor-ring {
     width: 36px; height: 36px;
@@ -58,6 +58,12 @@
     transform: translate(-50%, -50%);
     transition: transform 0.18s ease;
     opacity: 0.5;
+    display: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    body { cursor: none; }
+    .cursor,
+    .cursor-ring { display: block; }
   }
 
   /* Noise overlay */
@@ -1195,7 +1201,7 @@
           <span class="stroke">CLUB</span>
         </span>
       </h1>
-      <p class="hero-established">Established 2022</p>
+      <!-- <p class="hero-established">Established 2022</p> -->
       <p class="hero-sub">Warsaw-based skateboarding community since 2022. People and boards first — cruising the city together, every week, all season long.</p>
       <div class="hero-actions">
         <a href="https://chat.whatsapp.com/LwtLbxt1eqWIBU5DchTXIn?mode=gi_t" target="_blank" rel="noopener" class="btn-whatsapp">Join WhatsApp</a>
@@ -1244,8 +1250,8 @@
             <span class="stat-desc">Free meetups</span>
           </div>
           <div class="stat">
-            <span class="stat-num">EN</span>
-            <span class="stat-desc">English comm.</span>
+            <span class="stat-num">EN/PL</span>
+            <span class="stat-desc">Communication</span>
           </div>
         </div>
       </div>
@@ -1572,15 +1578,18 @@
   // Custom cursor
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursor-ring');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  (function animCursor() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-    requestAnimationFrame(animCursor);
-  })();
+  const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (hasFinePointer && cursor && ring) {
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function animCursor() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(animCursor);
+    })();
+  }
 
   // Hamburger menu
   const hamburger = document.getElementById('hamburger');
