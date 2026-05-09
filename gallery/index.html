@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ale Skate Club - Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --surface: #f4f4f2;
+    --card: #ffffff;
+    --accent: #F7B021;
+    --yellow: #F7B021;
+    --text: #141414;
+    --muted: #5c5c5c;
+    --border: rgba(20, 20, 20, 0.08);
+    --accent-line: rgba(247, 176, 33, 0.35);
+    --font-head: 'Bebas Neue', sans-serif;
+    --font-body: 'Space Grotesk', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+    --nav-bar-height: 3.5rem;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.22;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 1rem 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.88);
+  }
+  .nav-logo {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-head);
+    font-size: 1.8rem;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-logo-img {
+    height: 1.9rem;
+    width: auto;
+    max-width: 100%;
+    display: block;
+  }
+  .nav-logo-img--hidden {
+    display: none !important;
+  }
+  .nav-logo-fallback {
+    display: none;
+  }
+  .nav-logo--fallback .nav-logo-fallback {
+    display: inline;
+  }
+  .nav-logo-accent {
+    color: var(--accent);
+  }
+  .nav-links {
+    display: flex; gap: 1.8rem; list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: var(--text);
+    padding: 0.5rem 1.2rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { background: var(--text); color: #fff; }
+
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--text);
+    transition: all 0.2s;
+  }
+  .nav-mobile {
+    display: none;
+    position: fixed;
+    top: var(--nav-bar-height); left: 0; right: 0;
+    background: rgba(255,255,255,0.98);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    z-index: 99;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-mobile a:hover { color: var(--accent); }
+  .nav-mobile-cta { color: var(--yellow) !important; }
+
+  .gallery-wrap {
+    width: min(100%, 1180px);
+    margin: 0 auto;
+  }
+
+  .gallery-wrap {
+    padding: calc(var(--nav-bar-height) + 1.5rem) 2.5rem 6rem;
+  }
+  .gallery-row {
+    display: grid;
+    gap: 3px;
+    margin-bottom: 3px;
+  }
+  .gallery-row--1 { grid-template-columns: 1fr; }
+  .gallery-row--2 { grid-template-columns: repeat(2, 1fr); }
+  .gallery-row--3 { grid-template-columns: repeat(3, 1fr); }
+  .gallery-row--4 { grid-template-columns: repeat(4, 1fr); }
+  .gallery-photo {
+    display: block;
+    aspect-ratio: 640 / 427;
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+  .gallery-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+  .gallery-photo:hover img { transform: scale(1.04); }
+
+  .photo-lightbox[hidden] { display: none; }
+  .photo-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    grid-template-columns: minmax(3rem, 8vw) minmax(0, 1fr) minmax(3rem, 8vw);
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    background: rgba(10, 10, 10, 0.92);
+  }
+  body.lightbox-open { overflow: hidden; }
+  .lightbox-frame {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    min-width: 0;
+  }
+  .lightbox-frame img {
+    max-width: 100%;
+    max-height: 82vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.42);
+  }
+  .lightbox-caption {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.72);
+    text-align: center;
+  }
+  .lightbox-close,
+  .lightbox-nav {
+    appearance: none;
+    border: 1px solid rgba(255,255,255,0.28);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .lightbox-close:hover,
+  .lightbox-close:focus-visible,
+  .lightbox-nav:hover,
+  .lightbox-nav:focus-visible {
+    background: rgba(247,176,33,0.16);
+    border-color: var(--accent);
+    outline: none;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    min-width: 3rem;
+    min-height: 3rem;
+    border-radius: 999px;
+    font-size: 1.25rem;
+  }
+  .lightbox-nav {
+    min-width: 3.25rem;
+    min-height: 4.5rem;
+    border-radius: 999px;
+    font-size: 2rem;
+    line-height: 1;
+  }
+  .lightbox-prev { grid-column: 1; justify-self: center; }
+  .lightbox-next { grid-column: 3; justify-self: center; }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 2rem 2.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 900px) {
+    nav { padding: 0.9rem 1.5rem; }
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .nav-hamburger {
+      display: flex;
+      gap: 4px;
+      padding: 2px;
+    }
+    .nav-hamburger span {
+      width: 18px;
+      height: 1.5px;
+    }
+
+    .gallery-wrap,
+    .footer {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    .gallery-row--3,
+    .gallery-row--4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .photo-lightbox {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: 0.75rem;
+      padding: 4.5rem 1rem 1rem;
+    }
+    .lightbox-frame {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
+    .lightbox-frame img { max-height: 72vh; }
+    .lightbox-prev,
+    .lightbox-next {
+      grid-row: 2;
+      min-height: 3.25rem;
+      width: 100%;
+      border-radius: 999px;
+    }
+    .lightbox-prev { grid-column: 1; }
+    .lightbox-next { grid-column: 2; }
+    .footer { flex-direction: column; }
+  }
+
+  @media (max-width: 520px) {
+    .gallery-row,
+    .gallery-row--2,
+    .gallery-row--3,
+    .gallery-row--4 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav>
+    <a href="../" class="nav-logo">
+      <img class="nav-logo-img" src="../images/logo-sm.png" alt="Ale Skate Club" width="400" height="73" decoding="async" onerror="this.onerror=null;this.classList.add('nav-logo-img--hidden');this.setAttribute('aria-hidden','true');this.removeAttribute('alt');var p=this.closest('.nav-logo');p.classList.add('nav-logo--fallback');p.querySelector('.nav-logo-fallback').removeAttribute('aria-hidden');">
+      <span class="nav-logo-fallback" aria-hidden="true">ALE<span class="nav-logo-accent">SKATE</span> CLUB</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../#about">About Us</a></li>
+      <li><a href="../#meetings">Regular Meetings</a></li>
+      <li><a href="../#events">Special Events</a></li>
+      <li><a href="../#join">How to Join</a></li>
+      <li><a href="../#photos">Photos</a></li>
+      <li><a href="../#partners">Partners</a></li>
+      <li><a href="../#contact">Contact</a></li>
+    </ul>
+    <a href="https://chat.whatsapp.com/LwtLbxt1eqWIBU5DchTXIn?mode=gi_t" target="_blank" rel="noopener" class="nav-cta">Join WhatsApp</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav-mobile" id="mobileNav">
+    <a href="../#about" class="mobile-link">About Us</a>
+    <a href="../#meetings" class="mobile-link">Regular Meetings</a>
+    <a href="../#events" class="mobile-link">Special Events</a>
+    <a href="../#join" class="mobile-link">How to Join</a>
+    <a href="../#photos" class="mobile-link">Photos</a>
+    <a href="../#partners" class="mobile-link">Partners</a>
+    <a href="../#contact" class="mobile-link">Contact</a>
+    <a href="https://chat.whatsapp.com/LwtLbxt1eqWIBU5DchTXIn?mode=gi_t" target="_blank" rel="noopener" class="mobile-link nav-mobile-cta">Join WhatsApp</a>
+  </div>
+
+  <main>
+    <section class="gallery-wrap" aria-label="Ale Skate Club photo gallery">
+      <div class="gallery-row gallery-row--1">
+        <a class="gallery-photo" href="DSC05087 Large.jpeg"><img src="DSC05087 Large.jpeg" alt="Ale Skate Club gallery photo 1" loading="lazy" /></a>
+      </div>
+      <div class="gallery-row gallery-row--2">
+        <a class="gallery-photo" href="DSC04604 Large.jpeg"><img src="DSC04604 Large.jpeg" alt="Ale Skate Club gallery photo 2" loading="lazy" /></a>
+        <a class="gallery-photo" href="DSC01295-Enhanced-SR Large.jpeg"><img src="DSC01295-Enhanced-SR Large.jpeg" alt="Ale Skate Club gallery photo 3" loading="lazy" /></a>
+      </div>
+      <div class="gallery-row gallery-row--3">
+        <a class="gallery-photo" href="DSC04761 Large.jpeg"><img src="DSC04761 Large.jpeg" alt="Ale Skate Club gallery photo 4" loading="lazy" /></a>
+        <a class="gallery-photo" href="DSC04892 Large.jpeg"><img src="DSC04892 Large.jpeg" alt="Ale Skate Club gallery photo 5" loading="lazy" /></a>
+        <a class="gallery-photo" href="DSC05019 Large.jpeg"><img src="DSC05019 Large.jpeg" alt="Ale Skate Club gallery photo 6" loading="lazy" /></a>
+      </div>
+      <div class="gallery-row gallery-row--4">
+        <a class="gallery-photo" href="DSC00531 Large.jpeg"><img src="DSC00531 Large.jpeg" alt="Ale Skate Club gallery photo 7" loading="lazy" /></a>
+        <a class="gallery-photo" href="DSC09583 Large.jpeg"><img src="DSC09583 Large.jpeg" alt="Ale Skate Club gallery photo 8" loading="lazy" /></a>
+        <a class="gallery-photo" href="DSC05148 Large.jpeg"><img src="DSC05148 Large.jpeg" alt="Ale Skate Club gallery photo 9" loading="lazy" /></a>
+        <a class="gallery-photo" href="DSC01108 Large.jpeg"><img src="DSC01108 Large.jpeg" alt="Ale Skate Club gallery photo 10" loading="lazy" /></a>
+      </div>
+      <div class="gallery-row gallery-row--1">
+        <a class="gallery-photo" href="DSC05102 Large.jpeg"><img src="DSC05102 Large.jpeg" alt="Ale Skate Club gallery photo 11" loading="lazy" /></a>
+      </div>
+      <div class="gallery-row gallery-row--2">
+        <a class="gallery-photo" href="DSC05327 Large.jpeg"><img src="DSC05327 Large.jpeg" alt="Ale Skate Club gallery photo 12" loading="lazy" /></a>
+        <a class="gallery-photo" href="DSC05054 Large.jpeg"><img src="DSC05054 Large.jpeg" alt="Ale Skate Club gallery photo 13" loading="lazy" /></a>
+      </div>
+      <div class="gallery-row gallery-row--3">
+        <a class="gallery-photo" href="DSC09959 Large.jpeg"><img src="DSC09959 Large.jpeg" alt="Ale Skate Club gallery photo 14" loading="lazy" /></a>
+        <a class="gallery-photo" href="DSC05259 Large.jpeg"><img src="DSC05259 Large.jpeg" alt="Ale Skate Club gallery photo 15" loading="lazy" /></a>
+        <a class="gallery-photo" href="DSC01334 Large.jpeg"><img src="DSC01334 Large.jpeg" alt="Ale Skate Club gallery photo 16" loading="lazy" /></a>
+      </div>
+      <div class="gallery-row gallery-row--1">
+        <a class="gallery-photo" href="IMG_0493 Large.jpeg"><img src="IMG_0493 Large.jpeg" alt="Ale Skate Club gallery photo 17" loading="lazy" /></a>
+      </div>
+      <div class="gallery-row gallery-row--1">
+        <a class="gallery-photo" href="DSC05190 Large.jpeg"><img src="DSC05190 Large.jpeg" alt="Ale Skate Club gallery photo 18" loading="lazy" /></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Ale Skate Club - Warsaw, Poland</p>
+    <p><a href="https://www.instagram.com/aleskate.club/" target="_blank" rel="noopener">Instagram @aleskate.club</a></p>
+  </footer>
+
+  <div class="photo-lightbox" id="photoLightbox" role="dialog" aria-modal="true" aria-label="Photo gallery" hidden>
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close photo gallery">×</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="Previous photo">‹</button>
+    <figure class="lightbox-frame">
+      <img id="lightboxImage" src="" alt="" />
+      <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
+    </figure>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="Next photo">›</button>
+  </div>
+</div>
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => mobileNav.classList.toggle('open'));
+  document.querySelectorAll('.mobile-link').forEach(a => {
+    a.addEventListener('click', () => mobileNav.classList.remove('open'));
+  });
+
+  // Dev-only gallery order preview from ../admin/index.html.
+  (function applyDevGalleryOrder() {
+    const isDevPreview = location.protocol === 'file:' || ['', 'localhost', '127.0.0.1'].includes(location.hostname);
+    if (!isDevPreview) return;
+
+    let order;
+    let highlights;
+    let layouts;
+    try {
+      order = JSON.parse(localStorage.getItem('aleskate.galleryPhotoOrder'));
+      highlights = JSON.parse(localStorage.getItem('aleskate.galleryHighlights'));
+      layouts = JSON.parse(localStorage.getItem('aleskate.galleryLayouts'));
+    } catch {
+      return;
+    }
+    if (!Array.isArray(order) || !order.length) return;
+    if (!Array.isArray(highlights)) highlights = [];
+    if (!layouts || typeof layouts !== 'object' || Array.isArray(layouts)) layouts = {};
+
+    const wrap = document.querySelector('.gallery-wrap');
+    if (!wrap) return;
+
+    const highlightSet = new Set(highlights);
+    let pending = [];
+    let pendingLayout = null;
+    let photoNumber = 1;
+    wrap.innerHTML = '';
+
+    function createPhoto(file) {
+      const link = document.createElement('a');
+      link.className = 'gallery-photo';
+      link.href = file;
+      link.innerHTML = `<img src="${file}" alt="Ale Skate Club gallery photo ${photoNumber}" loading="lazy" />`;
+      photoNumber += 1;
+      return link;
+    }
+
+    function addRow(files, rowSize) {
+      if (!files.length) return;
+      const row = document.createElement('div');
+      row.className = `gallery-row gallery-row--${rowSize}`;
+      files.forEach((file) => row.appendChild(createPhoto(file)));
+      wrap.appendChild(row);
+    }
+
+    function flushPending() {
+      while (pending.length) {
+        const rowSize = pendingLayout === '1/4' ? 4 : 2;
+        addRow(pending.splice(0, rowSize), rowSize);
+      }
+      pendingLayout = null;
+    }
+
+    order.forEach((file) => {
+      const layout = layouts[file] || (highlightSet.has(file) ? '1/1' : '1/2');
+      if (layout === '1/1') {
+        flushPending();
+        addRow([file], 1);
+      } else {
+        const rowLayout = layout === '1/4' ? '1/4' : '1/2';
+        if (pendingLayout && pendingLayout !== rowLayout) flushPending();
+        pendingLayout = rowLayout;
+        pending.push(file);
+      }
+    });
+    flushPending();
+  })();
+
+  const galleryLinks = Array.from(document.querySelectorAll('.gallery-photo'));
+  const lightbox = document.getElementById('photoLightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+  const photos = galleryLinks.map((link, index) => {
+    const image = link.querySelector('img');
+    return {
+      src: link.getAttribute('href'),
+      alt: image.getAttribute('alt') || `Ale Skate Club gallery photo ${index + 1}`
+    };
+  });
+  let currentPhotoIndex = 0;
+  let lastFocusedPhoto = null;
+
+  function updateLightboxPhoto() {
+    const photo = photos[currentPhotoIndex];
+    lightboxImage.src = photo.src;
+    lightboxImage.alt = photo.alt;
+    lightboxCaption.textContent = `${currentPhotoIndex + 1} / ${photos.length}`;
+  }
+
+  function showLightboxPhoto(index) {
+    currentPhotoIndex = (index + photos.length) % photos.length;
+    updateLightboxPhoto();
+  }
+
+  function openLightbox(index, trigger) {
+    lastFocusedPhoto = trigger;
+    showLightboxPhoto(index);
+    lightbox.hidden = false;
+    document.body.classList.add('lightbox-open');
+    lightboxClose.focus();
+  }
+
+  function closeLightbox() {
+    lightbox.hidden = true;
+    document.body.classList.remove('lightbox-open');
+    lightboxImage.removeAttribute('src');
+    if (lastFocusedPhoto) lastFocusedPhoto.focus();
+  }
+
+  if (lightbox && photos.length) {
+    galleryLinks.forEach((link, index) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        openLightbox(index, link);
+      });
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev.addEventListener('click', () => showLightboxPhoto(currentPhotoIndex - 1));
+    lightboxNext.addEventListener('click', () => showLightboxPhoto(currentPhotoIndex + 1));
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (lightbox.hidden) return;
+      if (event.key === 'Escape') closeLightbox();
+      if (event.key === 'ArrowLeft') showLightboxPhoto(currentPhotoIndex - 1);
+      if (event.key === 'ArrowRight') showLightboxPhoto(currentPhotoIndex + 1);
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Ale Skate Club - Dev Image Order</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  :root {
+    --bg: #101010;
+    --panel: #1b1b1b;
+    --panel-2: #242424;
+    --text: #f8f6ef;
+    --muted: #b7b2a6;
+    --accent: #F7B021;
+    --border: rgba(255,255,255,0.12);
+    --danger: #ff6b6b;
+    --ok: #7bd88f;
+    --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    line-height: 1.5;
+  }
+  header {
+    padding: 2rem clamp(1rem, 4vw, 3rem);
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(247,176,33,0.18), transparent 42%);
+  }
+  main {
+    display: grid;
+    gap: 2rem;
+    padding: 2rem clamp(1rem, 4vw, 3rem) 4rem;
+  }
+  h1, h2, h3, p { margin-top: 0; }
+  h1 { margin-bottom: 0.5rem; font-size: clamp(2rem, 5vw, 4rem); line-height: 1; }
+  h2 { margin-bottom: 0.5rem; }
+  h3 { margin-bottom: 0.75rem; font-size: 1rem; }
+  a { color: var(--accent); }
+  .note {
+    max-width: 880px;
+    color: var(--muted);
+  }
+  .dev-warning {
+    max-width: 880px;
+    padding: 1rem;
+    border: 1px solid rgba(247,176,33,0.45);
+    border-radius: 1rem;
+    background: rgba(247,176,33,0.1);
+    color: var(--text);
+  }
+  .boards {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .board {
+    min-width: 0;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    background: var(--panel);
+  }
+  .board-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .board-head p {
+    margin-bottom: 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .counter {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+  .counter.ok { color: var(--ok); border-color: rgba(123,216,143,0.45); }
+  .counter.error { color: var(--danger); border-color: rgba(255,107,107,0.45); }
+  .actions, .item-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .spaced-actions {
+    margin-bottom: 1rem;
+  }
+  .section-subhead {
+    margin-top: 1.25rem;
+  }
+  button {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--panel-2);
+    color: var(--text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.84rem;
+    padding: 0.55rem 0.85rem;
+  }
+  button:hover, button:focus-visible {
+    border-color: var(--accent);
+    outline: none;
+  }
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+  .primary {
+    background: var(--accent);
+    color: #16120a;
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+  .is-active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .danger { color: var(--danger); }
+  .library {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+    gap: 0.65rem;
+  }
+  .tile {
+    position: relative;
+    display: grid;
+    gap: 0.45rem;
+    padding: 0.55rem;
+    border: 1px solid var(--border);
+    border-radius: 0.9rem;
+    background: #151515;
+    text-align: left;
+  }
+  .tile.is-selected {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px rgba(247,176,33,0.35);
+  }
+  .tile img,
+  .photo-card img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 0.6rem;
+    background: #000;
+  }
+  .tile-name,
+  .photo-name {
+    overflow-wrap: anywhere;
+    font-family: var(--mono);
+    font-size: 0.76rem;
+  }
+  .tile-badge {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    padding: 0.25rem 0.45rem;
+    border-radius: 999px;
+    background: rgba(16,16,16,0.82);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+  }
+  .list {
+    display: grid;
+    gap: 0.65rem;
+    min-height: 8rem;
+  }
+  .home-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3px;
+  }
+  .photo-card {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 0.85rem;
+    align-items: center;
+    padding: 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 0.9rem;
+    background: #151515;
+  }
+  .photo-card.is-highlight {
+    border-color: var(--accent);
+    background: rgba(247,176,33,0.08);
+  }
+  .photo-card[draggable="true"] { cursor: grab; }
+  .photo-card.dragging {
+    opacity: 0.45;
+    border-color: var(--accent);
+  }
+  .home-grid .photo-card {
+    position: relative;
+    display: block;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 0.45rem;
+  }
+  .home-grid .photo-card img {
+    display: block;
+    border-radius: 0;
+  }
+  .home-grid .photo-meta {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 0.5rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.86));
+  }
+  .home-grid .photo-index {
+    margin-bottom: 0.15rem;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+  }
+  .home-grid .photo-name {
+    display: none;
+  }
+  .home-grid .item-actions {
+    margin-top: 0.25rem;
+  }
+  .home-grid .item-actions button {
+    padding: 0.25rem 0.42rem;
+    background: rgba(16,16,16,0.78);
+  }
+  .photo-meta { min-width: 0; }
+  .photo-index {
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    margin-bottom: 0.2rem;
+  }
+  .highlight-note {
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+  .item-actions { margin-top: 0.55rem; }
+  .item-actions button {
+    padding: 0.35rem 0.55rem;
+    font-size: 0.75rem;
+  }
+  .output {
+    display: grid;
+    gap: 1rem;
+  }
+  .output-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  textarea {
+    display: block;
+    width: 100%;
+    min-height: 18rem;
+    resize: vertical;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: #090909;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+  .status {
+    min-height: 1.5rem;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.82rem;
+  }
+  @media (max-width: 1080px) {
+    .boards,
+    .output-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 760px) {
+    .home-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 560px) {
+    .board-head {
+      display: grid;
+    }
+    .list:not(.home-grid) .photo-card {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Dev Image Order</h1>
+    <p class="note">Pick the 12 homepage photos from every image in <code>gallery/</code>, then order the gallery page, choose <code>1/1</code>, <code>1/2</code>, or <code>1/4</code> layout, and remove gallery images when needed.</p>
+    <div class="dev-warning">
+      Development helper only. It saves preview settings to this browser's localStorage and generates HTML snippets to paste into <code>index.html</code> and <code>gallery/index.html</code>.
+    </div>
+  </header>
+
+  <main>
+    <section class="boards" aria-label="Image order editors">
+      <div class="board">
+        <div class="board-head">
+          <div>
+            <h2>Homepage Pick 12</h2>
+            <p>Click any available image to include it on the homepage. Drag selected cards to set order.</p>
+          </div>
+          <span class="counter" id="homeCounter"></span>
+        </div>
+        <div class="actions spaced-actions">
+          <button type="button" data-reset="home">Reset</button>
+          <button type="button" class="primary" data-save="home">Save Preview</button>
+        </div>
+        <h3>Available Images</h3>
+        <div class="library" id="homeLibrary"></div>
+        <h3 class="section-subhead">Selected Homepage Order (4 columns x 3 rows)</h3>
+        <div class="list home-grid" id="homeList"></div>
+      </div>
+
+      <div class="board">
+        <div class="board-head">
+          <div>
+            <h2>Gallery Page</h2>
+            <p>Drag to reorder. Set each photo to <code>1/1</code>, <code>1/2</code>, or <code>1/4</code>, and remove photos you do not want on the gallery page.</p>
+          </div>
+          <span class="counter ok" id="galleryCounter"></span>
+        </div>
+        <div class="actions spaced-actions">
+          <button type="button" data-reset="gallery">Reset</button>
+          <button type="button" class="primary" data-save="gallery">Save Preview</button>
+        </div>
+        <h3>Removed From Gallery</h3>
+        <div class="library spaced-actions" id="galleryLibrary"></div>
+        <h3 class="section-subhead">Selected Gallery Order</h3>
+        <div class="list" id="galleryList"></div>
+      </div>
+    </section>
+
+    <section class="output" aria-label="Generated HTML snippets">
+      <div>
+        <h2>Generated Markup</h2>
+        <p class="note">After saving, refresh the homepage or gallery page while developing locally to preview. To make the order permanent, replace the matching photo markup with these snippets.</p>
+        <div class="actions">
+          <button type="button" class="primary" id="copyHome">Copy Homepage Snippet</button>
+          <button type="button" class="primary" id="copyGallery">Copy Gallery Snippet</button>
+          <button type="button" class="danger" id="clearPreview">Clear Saved Preview</button>
+        </div>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+      </div>
+      <div class="output-grid">
+        <label>
+          <strong>Homepage <code>.photos-grid</code> contents</strong>
+          <textarea id="homeOutput" spellcheck="false"></textarea>
+        </label>
+        <label>
+          <strong>Gallery <code>.gallery-wrap</code> contents</strong>
+          <textarea id="galleryOutput" spellcheck="false"></textarea>
+        </label>
+      </div>
+    </section>
+  </main>
+
+<script>
+  const HOME_KEY = 'aleskate.homePhotoOrder';
+  const GALLERY_KEY = 'aleskate.galleryPhotoOrder';
+  const GALLERY_HIGHLIGHTS_KEY = 'aleskate.galleryHighlights';
+  const GALLERY_LAYOUTS_KEY = 'aleskate.galleryLayouts';
+  const HOME_LIMIT = 12;
+  const availableImages = [
+    'DSC05087 Large.jpeg',
+    'DSC04604 Large.jpeg',
+    'DSC01295-Enhanced-SR Large.jpeg',
+    'DSC04761 Large.jpeg',
+    'DSC04892 Large.jpeg',
+    'DSC05019 Large.jpeg',
+    'DSC00531 Large.jpeg',
+    'DSC09583 Large.jpeg',
+    'DSC05148 Large.jpeg',
+    'DSC01108 Large.jpeg',
+    'DSC05102 Large.jpeg',
+    'DSC05327 Large.jpeg',
+    'DSC05054 Large.jpeg',
+    'DSC09959 Large.jpeg',
+    'DSC05259 Large.jpeg',
+    'DSC01334 Large.jpeg',
+    'IMG_0493 Large.jpeg',
+    'DSC05190 Large.jpeg'
+  ];
+  const homeDefault = availableImages.slice(0, HOME_LIMIT);
+  const galleryDefault = [...availableImages];
+  const galleryLayoutDefault = Object.fromEntries(galleryDefault.map((file) => [file, '1/2']));
+  ['DSC05087 Large.jpeg', 'DSC05102 Large.jpeg', 'IMG_0493 Large.jpeg'].forEach((file) => {
+    galleryLayoutDefault[file] = '1/1';
+  });
+  const state = {
+    home: readOrder(HOME_KEY, homeDefault).slice(0, HOME_LIMIT),
+    gallery: readGalleryOrder(),
+    layouts: readLayouts()
+  };
+  const homeLibrary = document.getElementById('homeLibrary');
+  const galleryLibrary = document.getElementById('galleryLibrary');
+  const lists = {
+    home: document.getElementById('homeList'),
+    gallery: document.getElementById('galleryList')
+  };
+  const homeCounter = document.getElementById('homeCounter');
+  const galleryCounter = document.getElementById('galleryCounter');
+  const status = document.getElementById('status');
+  let dragged = null;
+
+  function readOrder(key, fallback) {
+    try {
+      const saved = JSON.parse(localStorage.getItem(key));
+      if (!Array.isArray(saved)) return [...fallback];
+      const known = new Set(availableImages);
+      return [...saved.filter((name) => known.has(name)), ...availableImages.filter((name) => !saved.includes(name))];
+    } catch {
+      return [...fallback];
+    }
+  }
+
+  function readGalleryOrder() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(GALLERY_KEY));
+      if (!Array.isArray(saved)) return [...galleryDefault];
+      const known = new Set(availableImages);
+      return saved.filter((name) => known.has(name));
+    } catch {
+      return [...galleryDefault];
+    }
+  }
+
+  function readLayouts() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(GALLERY_LAYOUTS_KEY));
+      if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
+        return Object.fromEntries(availableImages.map((file) => [file, ['1/1', '1/2', '1/4'].includes(saved[file]) ? saved[file] : '1/2']));
+      }
+      const highlights = JSON.parse(localStorage.getItem(GALLERY_HIGHLIGHTS_KEY));
+      if (Array.isArray(highlights)) {
+        return Object.fromEntries(availableImages.map((file) => [file, highlights.includes(file) ? '1/1' : '1/2']));
+      }
+    } catch {
+      return { ...galleryLayoutDefault };
+    }
+    return { ...galleryLayoutDefault };
+  }
+
+  function imagePath(file) {
+    return `../gallery/${file}`;
+  }
+
+  function setStatus(message) {
+    status.textContent = message;
+    window.clearTimeout(setStatus.timer);
+    setStatus.timer = window.setTimeout(() => { status.textContent = ''; }, 3200);
+  }
+
+  function moveItem(type, from, to) {
+    if (to < 0 || to >= state[type].length || from === to) return;
+    const [item] = state[type].splice(from, 1);
+    state[type].splice(to, 0, item);
+    render();
+  }
+
+  function toggleHomeImage(file) {
+    if (state.home.includes(file)) {
+      state.home = state.home.filter((name) => name !== file);
+    } else if (state.home.length < HOME_LIMIT) {
+      state.home.push(file);
+    } else {
+      setStatus(`Homepage already has ${HOME_LIMIT} images. Remove one first.`);
+    }
+    render();
+  }
+
+  function setGalleryLayout(file, layout) {
+    state.layouts[file] = layout;
+    render();
+  }
+
+  function removeGalleryImage(file) {
+    state.gallery = state.gallery.filter((name) => name !== file);
+    render();
+  }
+
+  function addGalleryImage(file) {
+    if (!state.gallery.includes(file)) state.gallery.push(file);
+    render();
+  }
+
+  function renderHomeLibrary() {
+    homeLibrary.innerHTML = '';
+    availableImages.forEach((file) => {
+      const selectedIndex = state.home.indexOf(file);
+      const tile = document.createElement('button');
+      tile.className = `tile${selectedIndex >= 0 ? ' is-selected' : ''}`;
+      tile.type = 'button';
+      tile.innerHTML = `
+        ${selectedIndex >= 0 ? `<span class="tile-badge">#${selectedIndex + 1}</span>` : ''}
+        <img src="${imagePath(file)}" alt="" loading="lazy" />
+        <span class="tile-name">${file}</span>
+      `;
+      tile.addEventListener('click', () => toggleHomeImage(file));
+      homeLibrary.appendChild(tile);
+    });
+  }
+
+  function renderGalleryLibrary() {
+    galleryLibrary.innerHTML = '';
+    const removed = availableImages.filter((file) => !state.gallery.includes(file));
+    if (!removed.length) {
+      galleryLibrary.innerHTML = '<p class="note">No removed images.</p>';
+      return;
+    }
+
+    removed.forEach((file) => {
+      const tile = document.createElement('button');
+      tile.className = 'tile';
+      tile.type = 'button';
+      tile.innerHTML = `
+        <img src="${imagePath(file)}" alt="" loading="lazy" />
+        <span class="tile-name">${file}</span>
+      `;
+      tile.addEventListener('click', () => addGalleryImage(file));
+      galleryLibrary.appendChild(tile);
+    });
+  }
+
+  function renderList(type) {
+    lists[type].innerHTML = '';
+    state[type].forEach((file, index) => {
+      const layout = state.layouts[file] || '1/2';
+      const isHighlight = type === 'gallery' && layout === '1/1';
+      const card = document.createElement('article');
+      card.className = `photo-card${isHighlight ? ' is-highlight' : ''}`;
+      card.draggable = true;
+      card.dataset.type = type;
+      card.dataset.index = index;
+      card.innerHTML = `
+        <img src="${imagePath(file)}" alt="" loading="lazy" />
+        <div class="photo-meta">
+          <div class="photo-index">#${String(index + 1).padStart(2, '0')}${type === 'gallery' ? ` / ${layout}` : ''}</div>
+          <div class="photo-name">${file}</div>
+          ${type === 'gallery' ? '<div class="highlight-note">1/1 = full-width. 1/2 = two columns. 1/4 = four columns.</div>' : ''}
+          <div class="item-actions">
+            <button type="button" data-move="up">Up</button>
+            <button type="button" data-move="down">Down</button>
+            <button type="button" data-move="top">Top</button>
+            ${type === 'home' ? '<button type="button" data-remove="home">Remove</button>' : `
+              <button type="button" data-layout="1/1" class="${layout === '1/1' ? 'is-active' : ''}">1/1</button>
+              <button type="button" data-layout="1/2" class="${layout === '1/2' ? 'is-active' : ''}">1/2</button>
+              <button type="button" data-layout="1/4" class="${layout === '1/4' ? 'is-active' : ''}">1/4</button>
+              <button type="button" data-remove="gallery">Remove</button>
+            `}
+          </div>
+        </div>
+      `;
+      lists[type].appendChild(card);
+    });
+  }
+
+  function renderCounters() {
+    homeCounter.textContent = `${state.home.length} / ${HOME_LIMIT} selected`;
+    homeCounter.classList.toggle('ok', state.home.length === HOME_LIMIT);
+    homeCounter.classList.toggle('error', state.home.length !== HOME_LIMIT);
+    const fullWidthCount = state.gallery.filter((file) => state.layouts[file] === '1/1').length;
+    const halfWidthCount = state.gallery.filter((file) => state.layouts[file] === '1/2').length;
+    const quarterWidthCount = state.gallery.filter((file) => state.layouts[file] === '1/4').length;
+    galleryCounter.textContent = `${state.gallery.length} selected / ${fullWidthCount} x 1/1 / ${halfWidthCount} x 1/2 / ${quarterWidthCount} x 1/4 / ${availableImages.length - state.gallery.length} removed`;
+  }
+
+  function render() {
+    renderHomeLibrary();
+    renderGalleryLibrary();
+    renderList('home');
+    renderList('gallery');
+    renderCounters();
+    updateOutputs();
+  }
+
+  function getDragAfterElement(container, x, y) {
+    const cards = [...container.querySelectorAll('.photo-card:not(.dragging)')];
+    if (!container.classList.contains('home-grid')) {
+      return cards.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+          return { offset, element: child };
+        }
+        return closest;
+      }, { offset: Number.NEGATIVE_INFINITY, element: null }).element;
+    }
+
+    const rows = [];
+    cards.forEach((card) => {
+      const box = card.getBoundingClientRect();
+      const row = rows.find((item) => Math.abs(item.top - box.top) < 8);
+      if (row) {
+        row.bottom = Math.max(row.bottom, box.bottom);
+        row.cards.push({ card, box });
+      } else {
+        rows.push({ top: box.top, bottom: box.bottom, cards: [{ card, box }] });
+      }
+    });
+
+    const row = rows.find((item) => y <= item.bottom) || rows[rows.length - 1];
+    if (!row) return null;
+
+    const nextInRow = row.cards.find(({ box }) => x < box.left + box.width / 2);
+    if (nextInRow) return nextInRow.card;
+
+    const rowIndex = rows.indexOf(row);
+    return rows[rowIndex + 1] ? rows[rowIndex + 1].cards[0].card : null;
+  }
+
+  function save(type) {
+    if (type === 'home') {
+      if (state.home.length !== HOME_LIMIT) {
+        setStatus(`Pick exactly ${HOME_LIMIT} homepage images before saving.`);
+        return;
+      }
+      localStorage.setItem(HOME_KEY, JSON.stringify(state.home));
+      setStatus('Homepage preview selection saved.');
+      return;
+    }
+
+    localStorage.setItem(GALLERY_KEY, JSON.stringify(state.gallery));
+    localStorage.setItem(GALLERY_LAYOUTS_KEY, JSON.stringify(state.layouts));
+    localStorage.setItem(GALLERY_HIGHLIGHTS_KEY, JSON.stringify(state.gallery.filter((file) => state.layouts[file] === '1/1')));
+    setStatus('Gallery preview order, layouts, and removals saved.');
+  }
+
+  function reset(type) {
+    if (type === 'home') {
+      state.home = [...homeDefault];
+      render();
+      save(type);
+      return;
+    }
+    state.gallery = [...galleryDefault];
+    state.layouts = { ...galleryLayoutDefault };
+    render();
+    save(type);
+  }
+
+  function buildGalleryRows() {
+    const rows = [];
+    let pending = [];
+    let pendingLayout = null;
+    let photoNumber = 1;
+    const flushPending = () => {
+      while (pending.length) {
+        const rowSize = pendingLayout === '1/4' ? 4 : 2;
+        const photos = pending.splice(0, rowSize);
+        rows.push(`      <div class="gallery-row gallery-row--${rowSize}">`);
+        photos.forEach((file) => {
+          rows.push(`        <a class="gallery-photo" href="${file}"><img src="${file}" alt="Ale Skate Club gallery photo ${photoNumber}" loading="lazy" /></a>`);
+          photoNumber += 1;
+        });
+        rows.push('      </div>');
+      }
+      pendingLayout = null;
+    };
+
+    state.gallery.forEach((file) => {
+      if (state.layouts[file] === '1/1') {
+        flushPending();
+        rows.push('      <div class="gallery-row gallery-row--1">');
+        rows.push(`        <a class="gallery-photo" href="${file}"><img src="${file}" alt="Ale Skate Club gallery photo ${photoNumber}" loading="lazy" /></a>`);
+        rows.push('      </div>');
+        photoNumber += 1;
+      } else {
+        const layout = state.layouts[file] === '1/4' ? '1/4' : '1/2';
+        if (pendingLayout && pendingLayout !== layout) flushPending();
+        pendingLayout = layout;
+        pending.push(file);
+      }
+    });
+    flushPending();
+    return rows.join('\n');
+  }
+
+  function updateOutputs() {
+    document.getElementById('homeOutput').value = state.home
+      .map((file, index) => `      <button class="photo-item" type="button"><img src="gallery/${file}" alt="Ale Skate Club session photo ${index + 1}" loading="lazy" /></button>`)
+      .join('\n');
+    document.getElementById('galleryOutput').value = buildGalleryRows();
+  }
+
+  async function copyOutput(id, label) {
+    const value = document.getElementById(id).value;
+    await navigator.clipboard.writeText(value);
+    setStatus(`${label} snippet copied.`);
+  }
+
+  Object.entries(lists).forEach(([type, list]) => {
+    list.addEventListener('dragstart', (event) => {
+      const card = event.target.closest('.photo-card');
+      if (!card) return;
+      dragged = card;
+      card.classList.add('dragging');
+      event.dataTransfer.effectAllowed = 'move';
+    });
+    list.addEventListener('dragend', () => {
+      if (dragged) dragged.classList.remove('dragging');
+      dragged = null;
+    });
+    list.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      const afterElement = getDragAfterElement(list, event.clientX, event.clientY);
+      if (!dragged || dragged.dataset.type !== type) return;
+      if (afterElement == null) {
+        list.appendChild(dragged);
+      } else {
+        list.insertBefore(dragged, afterElement);
+      }
+    });
+    list.addEventListener('drop', () => {
+      if (!dragged || dragged.dataset.type !== type) return;
+      state[type] = [...list.querySelectorAll('.photo-card')].map((card) => state[type][Number(card.dataset.index)]);
+      render();
+    });
+    list.addEventListener('click', (event) => {
+      const card = event.target.closest('.photo-card');
+      if (!card) return;
+      const index = Number(card.dataset.index);
+      const file = state[type][index];
+      if (event.target.dataset.move === 'up') moveItem(type, index, index - 1);
+      if (event.target.dataset.move === 'down') moveItem(type, index, index + 1);
+      if (event.target.dataset.move === 'top') moveItem(type, index, 0);
+      if (event.target.dataset.remove === 'home') toggleHomeImage(file);
+      if (event.target.dataset.remove === 'gallery') removeGalleryImage(file);
+      if (event.target.dataset.layout) setGalleryLayout(file, event.target.dataset.layout);
+    });
+  });
+
+  document.querySelectorAll('[data-save]').forEach((button) => {
+    button.addEventListener('click', () => save(button.dataset.save));
+  });
+  document.querySelectorAll('[data-reset]').forEach((button) => {
+    button.addEventListener('click', () => reset(button.dataset.reset));
+  });
+  document.getElementById('copyHome').addEventListener('click', () => copyOutput('homeOutput', 'Homepage'));
+  document.getElementById('copyGallery').addEventListener('click', () => copyOutput('galleryOutput', 'Gallery'));
+  document.getElementById('clearPreview').addEventListener('click', () => {
+    localStorage.removeItem(HOME_KEY);
+    localStorage.removeItem(GALLERY_KEY);
+    localStorage.removeItem(GALLERY_HIGHLIGHTS_KEY);
+    localStorage.removeItem(GALLERY_LAYOUTS_KEY);
+    state.home = [...homeDefault];
+    state.gallery = [...galleryDefault];
+    state.layouts = { ...galleryLayoutDefault };
+    render();
+    setStatus('Saved preview settings cleared.');
+  });
+
+  render();
+</script>
+</body>
+</html>
