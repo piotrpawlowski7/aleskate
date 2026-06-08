@@ -822,13 +822,16 @@
   .contact-link:hover { border-color: var(--accent); }
 
   /* PARTNERS */
-  .partners { background: var(--bg); }
+  .partners { background: var(--bg); overflow-x: clip; }
+  .partners-carousel {
+    margin-top: 3rem;
+    position: relative;
+  }
   .partners-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;
     background: var(--border);
-    margin-top: 3rem;
   }
   .partner-slot {
     background: var(--card);
@@ -854,6 +857,16 @@
     height: 85%;
     max-width: none;
     max-height: none;
+  }
+  .partners-carousel-hint {
+    display: none;
+    margin-top: 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
   }
   .partners-footer-row {
     margin-top: 2.5rem;
@@ -1145,7 +1158,30 @@
     .join-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .join-illustration { display: none; }
     .contact-grid { grid-template-columns: 1fr; }
-    .partners-grid { grid-template-columns: repeat(2, 1fr); }
+    .partners-carousel {
+      margin-left: -1.5rem;
+      margin-right: -1.5rem;
+      padding: 0 1.5rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+    }
+    .partners-carousel::-webkit-scrollbar { display: none; }
+    .partners-grid {
+      display: flex;
+      gap: 0.75rem;
+      width: max-content;
+      max-width: none;
+      background: none;
+    }
+    .partner-slot {
+      flex: 0 0 min(76vw, 280px);
+      scroll-snap-align: start;
+    }
+    .partners-carousel-hint { display: block; }
     .footer-top {
       grid-template-columns: 1fr;
       gap: 2.5rem;
@@ -1431,16 +1467,19 @@
       <p class="section-label">Partners</p>
       <h2 class="section-title">Partners</h2>
     </div>
-    <div class="partners-grid reveal">
-      <div class="partner-slot">
-        <img src="images/partners/logo-zefir.png" alt="Zefir logo" loading="lazy" />
+    <div class="partners-carousel reveal">
+      <div class="partners-grid">
+        <div class="partner-slot">
+          <img src="images/partners/logo-zefir.png" alt="Zefir logo" loading="lazy" />
+        </div>
+        <div class="partner-slot">
+          <img src="images/partners/skarland_logo.png" alt="Skarland logo" loading="lazy" />
+        </div>
+        <div class="partner-slot">
+          <img src="images/partners/letnisko_zoliborz.png" alt="Letnisko Zoliborz logo" loading="lazy" />
+        </div>
       </div>
-      <div class="partner-slot">
-        <img src="images/partners/skarland_logo.png" alt="Skarland logo" loading="lazy" />
-      </div>
-      <div class="partner-slot">
-        <img src="images/partners/letnisko_zoliborz.png" alt="Letnisko Zoliborz logo" loading="lazy" />
-      </div>
+      <p class="partners-carousel-hint" aria-hidden="true">Swipe for more partners</p>
     </div>
     <div class="partners-footer-row reveal">
       <div class="partners-dog">
