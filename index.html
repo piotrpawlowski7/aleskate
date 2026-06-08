@@ -246,8 +246,12 @@
     opacity: 0.95;
   }
   .tape-inner {
-    display: inline-block;
+    display: flex;
+    width: max-content;
     animation: marquee 22s linear infinite;
+  }
+  .tape-track {
+    flex-shrink: 0;
     white-space: nowrap;
   }
   .hero-content {
@@ -1173,7 +1177,7 @@
   <a href="#photos" class="mobile-link">Photos</a>
   <a href="#partners" class="mobile-link">Partners</a>
   <a href="#contact" class="mobile-link">Contact</a>
-  <a href="https://chat.whatsapp.com/LwtLbxt1eqWIBU5DchTXIn?mode=gi_t" target="_blank" rel="noopener" class="nav-mobile-cta">Join WhatsApp →</a>
+  <a href="https://chat.whatsapp.com/LwtLbxt1eqWIBU5DchTXIn?mode=gi_t" target="_blank" rel="noopener" class="nav-mobile-cta">Join the club</a>
 </div>
 
 <!-- HERO -->
@@ -1210,7 +1214,8 @@
     </div>
     <div class="hero-tape" aria-hidden="true">
       <div class="tape-inner">
-        WARSAW SKATEBOARDING &nbsp;★&nbsp; ESTABLISHED 2022 &nbsp;★&nbsp; COMMUNITY &nbsp;★&nbsp; CRUISING &nbsp;★&nbsp; SURFSKATE &nbsp;★&nbsp; LONGBOARD &nbsp;★&nbsp; DANCING &nbsp;★&nbsp; RIVER RIDES &nbsp;★&nbsp; WARSAW SKATEBOARDING &nbsp;★&nbsp; ESTABLISHED 2022 &nbsp;★&nbsp; COMMUNITY &nbsp;★&nbsp; CRUISING &nbsp;★&nbsp; SURFSKATE &nbsp;★&nbsp; LONGBOARD &nbsp;★&nbsp; DANCING &nbsp;★&nbsp; RIVER RIDES &nbsp;★&nbsp;
+        <span class="tape-track">WARSAW SKATEBOARDING &nbsp;★&nbsp; ESTABLISHED 2022 &nbsp;★&nbsp; COMMUNITY &nbsp;★&nbsp; CRUISING &nbsp;★&nbsp; SURFSKATE &nbsp;★&nbsp; LONGBOARD &nbsp;★&nbsp; DANCING &nbsp;★&nbsp; RIVER RIDES &nbsp;★&nbsp;&nbsp;</span>
+        <span class="tape-track" aria-hidden="true">WARSAW SKATEBOARDING &nbsp;★&nbsp; ESTABLISHED 2022 &nbsp;★&nbsp; COMMUNITY &nbsp;★&nbsp; CRUISING &nbsp;★&nbsp; SURFSKATE &nbsp;★&nbsp; LONGBOARD &nbsp;★&nbsp; DANCING &nbsp;★&nbsp; RIVER RIDES &nbsp;★&nbsp;&nbsp;</span>
       </div>
     </div>
   </div>
@@ -1267,7 +1272,7 @@
       <div class="meeting-card">
         <img src="images/ALESCLUB_ILU_02-03.png" alt="ALE Tuesday illustration" />
         <div class="meeting-day">Every Tuesday</div>
-        <div class="meeting-name">ALE.TUESDAYS</div>
+        <div class="meeting-name">ALE.TUESDAY</div>
         <div class="meeting-location">Polna 30a / Politechnika metro → Letnisko Żoliborz</div>
         <p class="meeting-desc">
           Our <strong>core weekly ride</strong> and the one that brings together the biggest part of the community. If you want to meet as many people from the ALE Skate crew as possible, this is the one.<br><br>
@@ -1287,15 +1292,16 @@
         </p>
       </div>
 
-      <!-- ALE Saturday -->
+      <!-- ALE Skatepark -->
       <div class="meeting-card">
-        <img src="images/ALESCLUB_ILU_02-05.png" alt="ALE Saturday illustration" />
-        <div class="meeting-day">Every Saturday · Morning onward</div>
-        <div class="meeting-name">ALE.SATURDAYS</div>
-        <div class="meeting-location">Zielonka Skatepark · Dziennikarska 57</div>
+        <img src="images/ALESCLUB_ILU_02-05.png" alt="ALE Skatepark illustration" />
+        <div class="meeting-day">Various weekdays</div>
+        <div class="meeting-name">ALE.SKATEPARK</div>
+        <div class="meeting-location">Various skateparks across Warsaw</div>
         <p class="meeting-desc">
-          Weekly community meetups at the skatepark in <strong>Zielonka</strong> (north-east of the city), aimed mainly at surfskaters and skateboarders, every Saturday from the morning, all season.<br><br>
-          Skaters and beginners ride together; sometimes people show up just to hang out. We ride, talk, learn from each other. <strong>First time at a skatepark?</strong> There's usually someone to give you tips on how to start and cheer you on.
+          Community meetups at various skateparks across Warsaw, aimed mainly at surfskaters and skateboarders throughout the season.<br><br>
+          Skaters and beginners ride together; sometimes people join just to hang out. We ride, talk, and learn from each other. <strong>First time at a skatepark?</strong> There's usually someone around to share tips, help you get started, and cheer you on.<br><br>
+          Meetups are informal and take place irregularly. We arrange joint sessions at the skatepark via a WhatsApp group.
         </p>
       </div>
 
@@ -1318,7 +1324,7 @@
       <!-- Skarland Camp -->
       <div class="event-card">
         <div class="event-label">Weekend Camp · 3-4× per season</div>
-        <div class="event-name">ALE Surfskate Camp in Skarland</div>
+        <div class="event-name">ALE.SURFSKATE CAMP</div>
         <div class="event-meta">
           <span class="event-badge">Free</span>
           <span class="event-badge">Skarżysko-Kamienna</span>
@@ -1326,7 +1332,7 @@
         </div>
         <p class="event-desc">
           Free <strong>weekend surfskate camps</strong> at the <strong>largest skatepark in Poland</strong> in <strong>Skarżysko-Kamienna</strong> (Skarland).<br><br>
-          We usually leave <strong>Friday after work</strong> or early Saturday and spend the whole weekend at the park. Days: riding and skating together. Evenings: <strong>campfire</strong>, tents on the park grounds. Good weather: swims in a nearby lake.<br><br>
+          We usually leave <strong>Friday after work</strong> or early Saturday and spend the whole weekend at the skate park. Days: riding and skating together. Evenings: <strong>campfire</strong>. Good weather: swims in a nearby lake.<br><br>
           <strong>3-4 trips per season</strong> - dates announced before the season starts.
         </p>
       </div>
@@ -1334,7 +1340,7 @@
       <!-- Street Parade -->
       <div class="event-card">
         <div class="event-label">City Event · 1-2× per season</div>
-        <div class="event-name">ALE Skateboarding Street Parade</div>
+        <div class="event-name">ALE.SKATE STREET PARADE</div>
         <div class="event-meta">
           <span class="event-badge">Free</span>
           <span class="event-badge">Warsaw streets</span>
@@ -1440,12 +1446,12 @@
 
         <div class="faq-item reveal">
           <button class="faq-q">What skill level do I need to join?<span class="faq-icon">+</span></button>
-          <div class="faq-a"><p>The bar is simple: if you can stand on your board and ride straight, you're welcome. We have riders at all levels - from people who just started to those already landing tricks. The community is supportive and there's no skill-judging here.</p></div>
+          <div class="faq-a"><p>The bar is simple: if you can stand on your board and ride straight, you're welcomed. We have riders at all levels - from people who just started to those already landing tricks. The community is supportive and there's no skill-judging here.</p></div>
         </div>
 
         <div class="faq-item reveal">
           <button class="faq-q">When and where do sessions take place?<span class="faq-icon">+</span></button>
-          <div class="faq-a"><p>We have three regular weekly sessions: ALE.TUESDAYS river rides (starts at Polna 30a / Politechnika metro), ALE.DANCE on various weekdays at central locations, and ALE.SATURDAYS at Zielonka skatepark (Dziennikarska 57). Always check the WhatsApp Community for the current time and spot before heading out - times shift with the season.</p></div>
+          <div class="faq-a"><p>We have three regular weekly sessions: ALE.TUESDAY river rides (starts at Polna 30a / Politechnika metro), ALE.DANCE and ALE.SKATEPARK on various weekdays. Always check the WhatsApp Community for the current time and spot before heading out - times shift with the season.</p></div>
         </div>
 
         <div class="faq-item reveal">
@@ -1455,7 +1461,7 @@
 
         <div class="faq-item reveal">
           <button class="faq-q">What boards are welcome?<span class="faq-icon">+</span></button>
-          <div class="faq-a"><p>Any board with wheels - classic street deck, surfskate, longboard, dancing board. If it rolls, it fits right in. Different sessions have different vibes: ALE Dance leans toward longboards, Tuesday rides welcome everything.</p></div>
+          <div class="faq-a"><p>Any board with wheels - classic street deck, surfskate, longboard, dancing board. If it rolls, it fits right in. Different sessions have different vibes: ALE.dance leans toward longboards, ALE.tuesday rides welcome everything.</p></div>
         </div>
 
         <div class="faq-item reveal">
@@ -1465,7 +1471,7 @@
 
         <div class="faq-item reveal">
           <button class="faq-q">What are the Special Events?<span class="faq-icon">+</span></button>
-          <div class="faq-a"><p>Once or twice a season we organize the ALE Skateboarding Street Parade - a relaxed group cruise through Warsaw streets normally closed to skaters, with a police escort, temporarily closed streets, and up to ~150 riders. We also run 3-4 weekend surfskate camps at Skarland (the biggest skatepark in Poland) in Skarżysko-Kamienna, with campfire and tents. All free.</p></div>
+          <div class="faq-a"><p>Once or twice a season we organize the ALE.SKATE STREET PARADE - a relaxed group cruise through Warsaw streets normally closed to skaters, with a police escort, temporarily closed streets, and up to ~150 riders. We also run 3-4 weekend surfskate camps at Skarland (ALE.SURFSKATE CAMP) in Skarżysko-Kamienna, the biggest skatepark in Poland. All free.</p></div>
         </div>
 
         <div class="faq-item reveal">
@@ -1521,17 +1527,17 @@
     <div class="footer-col">
       <h4>Regular Meetings</h4>
       <ul>
-        <li>ALE Tuesday - River Rides</li>
-        <li>ALE Dance - Various weekdays</li>
-        <li>ALE Saturday - Zielonka</li>
+        <li>Ale.Tuesday - river riders</li>
+        <li>Ale.Dance - various weekdays</li>
+        <li>Ale.Skatepark - various weekdays</li>
         <li>Season: April-September</li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Special Events</h4>
       <ul>
-        <li>Street Parade (1-2× season)</li>
-        <li>Skarland Camp (3-4× season)</li>
+        <li>Ale.Skate Street Parade (1-2× season)</li>
+        <li>Ale.Surfskate camp (3-4× season)</li>
       </ul>
     </div>
     <div class="footer-col">

@@ -170,6 +170,15 @@
     margin-bottom: 3px;
   }
   .gallery-row--1 { grid-template-columns: 1fr; }
+  .gallery-row--1 .gallery-photo {
+    aspect-ratio: auto;
+    max-height: min(72vh, 900px);
+  }
+  .gallery-row--1 .gallery-photo img {
+    object-fit: contain;
+    height: auto;
+    max-height: min(72vh, 900px);
+  }
   .gallery-row--2 { grid-template-columns: repeat(2, 1fr); }
   .gallery-row--3 { grid-template-columns: repeat(3, 1fr); }
   .gallery-row--4 { grid-template-columns: repeat(4, 1fr); }
