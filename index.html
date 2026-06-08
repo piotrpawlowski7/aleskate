@@ -923,11 +923,20 @@
     padding: 4rem 2.5rem 2rem;
   }
   .footer-top {
-    display: flex; justify-content: space-between; align-items: flex-start;
+    display: grid;
+    grid-template-columns: minmax(220px, 280px) 1fr;
+    align-items: start;
     padding-bottom: 3rem;
     border-bottom: 1px solid var(--border);
-    gap: 3rem;
-    flex-wrap: wrap;
+    gap: 3rem 4rem;
+  }
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem 2.5rem;
+    max-width: 52rem;
+    justify-self: end;
+    width: 100%;
   }
   .footer-brand-mark {
     margin-bottom: 0.5rem;
@@ -1137,7 +1146,15 @@
     .join-illustration { display: none; }
     .contact-grid { grid-template-columns: 1fr; }
     .partners-grid { grid-template-columns: repeat(2, 1fr); }
-    .footer-top { flex-direction: column; }
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .footer-nav {
+      grid-template-columns: 1fr;
+      max-width: none;
+      justify-self: stretch;
+    }
   }
 </style>
 </head>
@@ -1461,7 +1478,7 @@
 
         <div class="faq-item reveal">
           <button class="faq-q">What boards are welcome?<span class="faq-icon">+</span></button>
-          <div class="faq-a"><p>Any board with wheels - classic street deck, surfskate, longboard, dancing board. If it rolls, it fits right in. Different sessions have different vibes: ALE.dance leans toward longboards, ALE.tuesday rides welcome everything.</p></div>
+          <div class="faq-a"><p>Any board with wheels - classic street deck, surfskate, longboard, dancing board. If it rolls, it fits right in. Different sessions have different vibes: ALE.DANCE leans toward longboards, ALE.TUESDAY rides welcome everything.</p></div>
         </div>
 
         <div class="faq-item reveal">
@@ -1471,7 +1488,7 @@
 
         <div class="faq-item reveal">
           <button class="faq-q">What are the Special Events?<span class="faq-icon">+</span></button>
-          <div class="faq-a"><p>Once or twice a season we organize the ALE.SKATE STREET PARADE - a relaxed group cruise through Warsaw streets normally closed to skaters, with a police escort, temporarily closed streets, and up to ~150 riders. We also run 3-4 weekend surfskate camps at Skarland (ALE.SURFSKATE CAMP) in Skarżysko-Kamienna, the biggest skatepark in Poland. All free.</p></div>
+          <div class="faq-a"><p>Once or twice a season we organize the ALE.SKATE street parade - a relaxed group cruise through Warsaw streets normally closed to skaters, with a police escort, temporarily closed streets, and up to ~150 riders. We also run 3-4 weekend surfskate camps at Skarland (ALE.SURFSKATE camp) in Skarżysko-Kamienna, the biggest skatepark in Poland. All free.</p></div>
         </div>
 
         <div class="faq-item reveal">
@@ -1524,29 +1541,31 @@
       </div>
       <p>Non-professional skate club in Warsaw. Established 2022.</p>
     </div>
-    <div class="footer-col">
-      <h4>Regular Meetings</h4>
-      <ul>
-        <li>Ale.Tuesday - river riders</li>
-        <li>Ale.Dance - various weekdays</li>
-        <li>Ale.Skatepark - various weekdays</li>
-        <li>Season: April-September</li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Special Events</h4>
-      <ul>
-        <li>Ale.Skate Street Parade (1-2× season)</li>
-        <li>Ale.Surfskate camp (3-4× season)</li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Connect</h4>
-      <ul>
-        <li><a href="https://chat.whatsapp.com/LwtLbxt1eqWIBU5DchTXIn?mode=gi_t" target="_blank" rel="noopener">Ale Skate Club WhatsApp </a></li>
-        <li><a href="https://www.instagram.com/aleskate.club/" target="_blank" rel="noopener">Instagram @aleskate.club</a></li>
-        <li><a href="mailto:ale.skate.club@gmail.com">ale.skate.club@gmail.com</a></li>
-      </ul>
+    <div class="footer-nav">
+      <div class="footer-col">
+        <h4>Regular Meetings</h4>
+        <ul>
+          <li>ALE.TUESDAY - river riders</li>
+          <li>ALE.DANCE - various weekdays</li>
+          <li>ALE.SKATEPARK - various weekdays</li>
+          <li>Season: April-September</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Special Events</h4>
+        <ul>
+          <li>ALE.SKATE street parade (1-2× season)</li>
+          <li>ALE.SURFSKATE camp (3-4× season)</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://chat.whatsapp.com/LwtLbxt1eqWIBU5DchTXIn?mode=gi_t" target="_blank" rel="noopener">Ale Skate Club WhatsApp </a></li>
+          <li><a href="https://www.instagram.com/aleskate.club/" target="_blank" rel="noopener">Instagram @aleskate.club</a></li>
+          <li><a href="mailto:ale.skate.club@gmail.com">ale.skate.club@gmail.com</a></li>
+        </ul>
+      </div>
     </div>
   </div>
   <div class="footer-bottom">
